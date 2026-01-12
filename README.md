@@ -1,73 +1,99 @@
-# Welcome to your Lovable project
+Lead Scope — Quick Team Health at a Glance
 
-## Project info
+What this is
+---------------
+Lead Scope is a lightweight dashboard designed to give people managers fast, high-signal visibility into how work is progressing across their team. It’s built to answer the question: “Where should I focus my attention right now?” — not to replace task trackers or become the single source of truth for every ticket.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Who this helps
+---------------
+- Primary user: a frontline manager or team lead who needs quick situational awareness across a handful of direct reports.
+- Secondary users: program managers, engineering managers, or anyone who needs to triage team-level execution risk rapidly.
 
-## How can I edit this code?
+Top-level idea
+---------------
+The app summarizes three simple dimensions for each person and for the team:
 
-There are several ways of editing your application.
+- Status (On Track / At Risk / Blocked / Completed)
+- Time horizon (when the work becomes urgent)
+- Workload (light → overloaded)
 
-**Use Lovable**
+If something is "At Risk" or "Blocked" the dashboard helps you see who to talk to and why, and whether that problem is immediate or can wait until the next planning sync.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Key terms (short, practical definitions)
+---------------
+- On Track — Work is progressing as expected; no immediate action required.
+- At Risk — There’s a chance the work will miss its expected outcome or deadline; watch or proactively unblock.
+- Blocked — Work is stopped by an external dependency or a condition that must be removed before progress continues. Blockers surface with how long they’ve existed.
+- Completed — Work that’s finished and no longer requires attention.
 
-Changes made via Lovable will be committed automatically to this repo.
+- Time horizons:
+	- immediate — due today or needs attention now
+	- short-term — due this week
+	- upcoming — due in the next weeks
 
-**Use your preferred IDE**
+- Workload levels: light, moderate, heavy, overloaded — a quick signal of capacity so you can balance assignments or re-allocate help.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Where these come from in the code
+---------------
+- The sample data and enums live in [src/data/mockData.ts](src/data/mockData.ts). Look for `WorkStatus`, `TimeHorizon`, and `WorkloadLevel` to see the exact labels and sample shapes.
+- Team summary logic is collected in utilities in the same file and rendered in [src/components/HealthSummary.tsx](src/components/HealthSummary.tsx).
+- The two main screens are: [src/components/TeamOverview.tsx](src/components/TeamOverview.tsx) (default) and [src/components/IndividualView.tsx](src/components/IndividualView.tsx).
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Why this design — the problem we solve
+---------------
+Managers often don’t have time to open tickets or read long reports. They need:
 
-Follow these steps:
+- A single glance to know who needs a conversation now.
+- A small set of signals (status + horizon + load) to prioritize outreach.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+This app turns raw task lists into those signals so managers can decide: 1) who to message, 2) who to pair with, 3) who needs escalation.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Key assumptions and one conscious trade-off
+---------------
+- Assumptions:
+	- This is a read-oriented summary for human decision-making, not a replacement for your ticketing system.
+	- The model favors aggregated signals over full task-level detail.
 
-# Step 3: Install the necessary dependencies.
-npm i
+- Trade-off (conscious): no inline editing, no automated push notifications. The product intentionally stays low-noise and read-only so that scanning remains fast and interruptions are minimized. If you need deep task management, use the underlying tracker.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+One thing intentionally not built
+---------------
+- Real-time alerts and a full task editor are intentionally omitted. This keeps the interface lightweight, speeds up scanning, and preserves the dashboard as a place for human judgement rather than alert-driven triage.
+
+Screens and why the default was chosen
+---------------
+- Team Overview (default): chosen because the core job is situational awareness across people — who’s at risk, where blockers live, and where capacity is tight. See [src/components/TeamOverview.tsx](src/components/TeamOverview.tsx).
+- Individual View: focused view for a single contributor showing their workload, blocker history, and recent delivery trend. See [src/components/IndividualView.tsx](src/components/IndividualView.tsx).
+
+How to run this project locally
+---------------
+Install dependencies and start the dev server (Node.js + npm/yarn/pnpm):
+
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Files worth skimming
+---------------
+- Data & helpers: [src/data/mockData.ts](src/data/mockData.ts)
+- Team overview screen: [src/components/TeamOverview.tsx](src/components/TeamOverview.tsx)
+- Individual screen: [src/components/IndividualView.tsx](src/components/IndividualView.tsx)
+- Small UI bits: [src/components/TimeHorizonCard.tsx](src/components/TimeHorizonCard.tsx), [src/components/TeamMemberCard.tsx](src/components/TeamMemberCard.tsx), [src/components/StatusBadge.tsx](src/components/StatusBadge.tsx)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Notes for you when answering the prompt questions
+---------------
+- Which screen was chosen and why
+	- Team Overview: it’s the default because the product solves for fast, cross-person awareness.
+- The primary user and the problem solved
+	- Primary user: frontline manager. Problem: where to spend limited conversation time to keep delivery healthy.
+- Key assumptions and one conscious trade-off
+	- See "Key assumptions and one conscious trade-off" above.
+- One thing intentionally not built, and why
+	- Notifications & deep editing: omitted to keep the dashboard fast and low-noise.
 
-**Use GitHub Codespaces**
+If you want, I can:
+- Add a short “How to present this” script you can copy into a meeting or an interview answer.
+- Add a quick section with copy-ready short answers (one-liners) for each of the four questions.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Thanks — tell me if you want the one-liners or a short speaker script next.

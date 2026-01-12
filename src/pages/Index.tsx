@@ -1,14 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import { TeamOverview } from '@/components/TeamOverview';
+import { IndividualView } from '@/components/IndividualView';
+import { getMemberById } from '@/data/mockData';
 
 const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
+
+  const selectedMember = selectedMemberId ? getMemberById(selectedMemberId) : null;
+
+  if (selectedMember) {
+    return (
+      <IndividualView
+        member={selectedMember}
+        onBack={() => setSelectedMemberId(null)}
+      />
+    );
+  }
+
+  return <TeamOverview onSelectMember={setSelectedMemberId} />;
 };
 
 export default Index;

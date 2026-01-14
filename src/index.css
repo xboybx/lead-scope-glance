@@ -56,6 +56,12 @@
     --shadow-md: 0 4px 6px -1px hsl(220 20% 14% / 0.06), 0 2px 4px -2px hsl(220 20% 14% / 0.06);
     --shadow-lg: 0 10px 15px -3px hsl(220 20% 14% / 0.08), 0 4px 6px -4px hsl(220 20% 14% / 0.08);
 
+    --chart-1: 0 72% 51%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 152 60% 42%;
+    --chart-4: 220 14% 46%;
+    --chart-5: 152 60% 42%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -107,6 +113,12 @@
     --heat-low: 152 40% 20%;
     --heat-medium: 38 50% 22%;
     --heat-high: 0 40% 22%;
+
+    --chart-1: 0 65% 55%;
+    --chart-2: 38 85% 55%;
+    --chart-3: 152 55% 50%;
+    --chart-4: 220 14% 60%;
+    --chart-5: 152 55% 50%;
 
     --sidebar-background: 220 20% 10%;
     --sidebar-foreground: 220 14% 96%;

@@ -8,8 +8,8 @@ interface TeamMemberCardProps {
 }
 
 function getHeatLevel(member: TeamMember): 'low' | 'medium' | 'high' {
-  const blockedCount = member.items.filter(i => i.status === 'blocked').length;
-  const atRiskCount = member.items.filter(i => i.status === 'at-risk').length;
+  const blockedCount = member.workItems.filter(i => i.status === 'blocked').length;
+  const atRiskCount = member.workItems.filter(i => i.status === 'at-risk').length;
   
   if (blockedCount > 0 || member.workload === 'overloaded') return 'high';
   if (atRiskCount > 1 || member.deliveryTrend === 'declining') return 'medium';
@@ -33,8 +33,8 @@ export function TeamMemberCard({ member, onClick }: TeamMemberCardProps) {
   const heatLevel = getHeatLevel(member);
   const TrendIcon = trendIcons[member.deliveryTrend];
   
-  const blockedCount = member.items.filter(i => i.status === 'blocked').length;
-  const atRiskCount = member.items.filter(i => i.status === 'at-risk').length;
+  const blockedCount = member.workItems.filter(i => i.status === 'blocked').length;
+  const atRiskCount = member.workItems.filter(i => i.status === 'at-risk').length;
 
   return (
     <button

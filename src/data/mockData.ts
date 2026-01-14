@@ -17,7 +17,7 @@ export interface TeamMember {
   avatar: string;
   workload: WorkloadLevel;
   deliveryTrend: DeliveryTrend;
-  items: WorkItem[];
+  workItems: WorkItem[];
   signals: string[];
 }
 
@@ -29,7 +29,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'SC',
     workload: 'moderate',
     deliveryTrend: 'stable',
-    items: [
+    workItems: [
       { id: '1a', status: 'completed', dueHorizon: 'immediate' },
       { id: '1b', status: 'on-track', dueHorizon: 'immediate' },
       { id: '1c', status: 'on-track', dueHorizon: 'short-term' },
@@ -47,7 +47,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'MJ',
     workload: 'heavy',
     deliveryTrend: 'declining',
-    items: [
+    workItems: [
       { id: '2a', status: 'blocked', dueHorizon: 'immediate', blockerDays: 3 },
       { id: '2b', status: 'at-risk', dueHorizon: 'immediate' },
       { id: '2c', status: 'on-track', dueHorizon: 'short-term' },
@@ -67,7 +67,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'ER',
     workload: 'moderate',
     deliveryTrend: 'improving',
-    items: [
+    workItems: [
       { id: '3a', status: 'completed', dueHorizon: 'immediate' },
       { id: '3b', status: 'completed', dueHorizon: 'immediate' },
       { id: '3c', status: 'on-track', dueHorizon: 'short-term' },
@@ -85,7 +85,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'DK',
     workload: 'light',
     deliveryTrend: 'stable',
-    items: [
+    workItems: [
       { id: '4a', status: 'on-track', dueHorizon: 'short-term' },
       { id: '4b', status: 'on-track', dueHorizon: 'upcoming' },
     ],
@@ -101,7 +101,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'LT',
     workload: 'overloaded',
     deliveryTrend: 'declining',
-    items: [
+    workItems: [
       { id: '5a', status: 'at-risk', dueHorizon: 'immediate' },
       { id: '5b', status: 'at-risk', dueHorizon: 'immediate' },
       { id: '5c', status: 'blocked', dueHorizon: 'short-term', blockerDays: 5 },
@@ -122,7 +122,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'JW',
     workload: 'moderate',
     deliveryTrend: 'stable',
-    items: [
+    workItems: [
       { id: '6a', status: 'on-track', dueHorizon: 'immediate' },
       { id: '6b', status: 'on-track', dueHorizon: 'short-term' },
       { id: '6c', status: 'on-track', dueHorizon: 'upcoming' },
@@ -139,7 +139,7 @@ export const teamMembers: TeamMember[] = [
     avatar: 'AK',
     workload: 'heavy',
     deliveryTrend: 'stable',
-    items: [
+    workItems: [
       { id: '7a', status: 'completed', dueHorizon: 'immediate' },
       { id: '7b', status: 'on-track', dueHorizon: 'immediate' },
       { id: '7c', status: 'at-risk', dueHorizon: 'short-term' },
@@ -154,7 +154,7 @@ export const teamMembers: TeamMember[] = [
 ];
 
 export function getTeamSummary() {
-  const allItems = teamMembers.flatMap(m => m.items);
+  const allItems = teamMembers.flatMap(m => m.workItems);
   
   return {
     total: allItems.length,
@@ -166,7 +166,7 @@ export function getTeamSummary() {
 }
 
 export function getHorizonSummary(horizon: TimeHorizon) {
-  const items = teamMembers.flatMap(m => m.items).filter(i => i.dueHorizon === horizon);
+  const items = teamMembers.flatMap(m => m.workItems).filter(i => i.dueHorizon === horizon);
   
   return {
     total: items.length,

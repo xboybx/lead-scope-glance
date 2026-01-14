@@ -1,23 +1,56 @@
 import { useState } from 'react';
 import { TeamOverview } from '@/components/TeamOverview';
 import { IndividualView } from '@/components/IndividualView';
-import { getMemberById } from '@/data/mockData';
+import { getMemberById, teamMembers, WorkStatus } from '@/data/mockData';
+import { StatusFilteredView } from '@/components/StatusFilteredView';
+
+type ViewState =
+  | { type: 'OVERVIEW' }
+  | { type: 'INDIVIDUAL'; memberId: string }
+  | { type: 'STATUS_FILTER'; status: WorkStatus };
 
 const Index = () => {
-  const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
+  const [viewState, setViewState] = useState<ViewState>({ type: 'OVERVIEW' });
 
-  const selectedMember = selectedMemberId ? getMemberById(selectedMemberId) : null;
+  const handleSelectMember = (memberId: string) => {
+    setViewState({ type: 'INDIVIDUAL', memberId });
+  };
 
-  if (selectedMember) {
+  const handleSelectStatus = (status: WorkStatus) => {
+    setViewState({ type: 'STATUS_FILTER', status });
+  };
+
+  const handleBackToOverview = () => {
+    setViewState({ type: 'OVERVIEW' });
+  };
+
+  if (viewState.type === 'INDIVIDUAL') {
+    const selectedMember = getMemberById(viewState.memberId);
+    if (selectedMember) {
+      return (
+        <IndividualView
+          member={selectedMember}
+          onBack={handleBackToOverview}
+        />
+      );
+    }
+  }
+
+  if (viewState.type === 'STATUS_FILTER') {
+    const membersWithStatus = teamMembers.filter(member =>
+      member.workItems.some(item => item.status === viewState.status)
+    );
     return (
-      <IndividualView
-        member={selectedMember}
-        onBack={() => setSelectedMemberId(null)}
+      <StatusFilteredView
+        status={viewState.status}
+        members={membersWithStatus}
+        onBack={handleBackToOverview}
+        onSelectMember={handleSelectMember}
       />
     );
   }
 
-  return <TeamOverview onSelectMember={setSelectedMemberId} />;
+  return <TeamOverview onSelectMember={handleSelectMember} onSelectStatus={handleSelectStatus} />;
 };
 
 export default Index;
